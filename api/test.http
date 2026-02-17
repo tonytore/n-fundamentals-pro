@@ -1,0 +1,21 @@
+GET http://localhost:3000
+
+###
+GET http://localhost:3000/songs
+
+###
+GET http://localhost:3000/songs/1
+
+###
+POST http://localhost:3000/songs
+Content-Type: application/json
+
+{
+  "title": "Song Title",
+  "artists": ["Artist Name"],
+  "releaseDate": "2025-08-27",
+  "duration": "02:34"
+}
+
+###
+put http://localhost:3000/songs/1
