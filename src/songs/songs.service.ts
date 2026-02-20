@@ -6,6 +6,10 @@ import { CreateSongDto } from './dto/create-song.dto';
 export class SongsService {
   songs: CreateSongDto[] = [];
   create(createSongDto: CreateSongDto) {
+    const songExists = this.findOne(createSongDto.id);
+    if (songExists) {
+      return { error: `Song with id ${createSongDto.id} already exists` };
+    }
     const newSongs = {
       id: this.songs.length + 1,
       title: createSongDto.title,
@@ -23,12 +27,13 @@ export class SongsService {
       total: this.songs.length,
       message: 'Songs retrieved successfully',
     };
+    // throw new Error('Error occured while db is connected');
   }
 
   findOne(id: number) {
     const song = this.songs.find((song) => song.id === id);
     if (!song) {
-      return { message: `Song with id ${id} not found` };
+      return { error: `Song with id ${id} not found` };
     }
     return song;
   }
