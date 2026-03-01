@@ -15,7 +15,19 @@ const proConfig = { port: 5000 };
 @Module({
   imports: [SongsModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: DevConfigService,
+      useClass: DevConfigService,
+    },
+    {
+      provide: 'CONFIG',
+      useFactory: () => {
+        return process.env.NODE_ENV === 'development' ? devConfig : proConfig;
+      },
+    },
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
